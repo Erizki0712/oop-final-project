@@ -10,9 +10,9 @@ public class MainMenu extends JFrame {
     private JButton buttonKeluar;
 
     public MainMenu() {
-        setTitle("Main Menu");
+        setTitle("Aplikasi Rental Mobil");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(300, 300);
+        setSize(500, 500);
         setLocationRelativeTo(null);
 
         JPanel panel = new JPanel();
