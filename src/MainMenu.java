@@ -16,7 +16,7 @@ public class MainMenu extends JFrame {
         setLocationRelativeTo(null);
 
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(3, 3));
+        panel.setLayout(new GridLayout(2, 3));
 
         buttonDataMobil = new JButton("Data Mobil");
         buttonDataPeminjaman = new JButton("Pendataan Peminjaman");
