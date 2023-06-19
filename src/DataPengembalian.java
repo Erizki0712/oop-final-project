@@ -17,7 +17,7 @@ public class DataPengembalian {
         this.user = user;
         JFrame frame = new JFrame();
         frame.setTitle("Data Pengembalian");
-        frame.setSize(800, 500);
+        frame.setSize(750, 500);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new FlowLayout());
 
