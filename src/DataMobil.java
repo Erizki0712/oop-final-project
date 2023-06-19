@@ -23,9 +23,6 @@ public class DataMobil extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new FlowLayout());
 
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(0, 2));
-
         // Membuat judul untuk kolom input
         labelMerk = new JLabel("Merk Mobil");
         labelNomorPlat = new JLabel("Nomor Plat");
@@ -63,6 +60,7 @@ public class DataMobil extends JFrame {
         add(buttonDelete);
         add(buttonBack);
         add(new JScrollPane(table));
+
 
         // Path data file
         dataFilePath = "data_mobil.txt";
