@@ -25,6 +25,7 @@ public class HalamanLogin extends JFrame {
         buttonLogin = new JButton("Login");
 
         panel.add(textArea);
+        panel.add(new JTextArea()); // Placeholder for spacing
         panel.add(labelUsername);
         panel.add(textFieldUsername);
         panel.add(labelPassword);
