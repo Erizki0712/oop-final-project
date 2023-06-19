@@ -17,15 +17,15 @@ public class HalamanLogin extends JFrame {
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(4, 2));
         
-        JTextArea textArea  =  new JTextArea("Silahkan Login");
+        JLabel label  =  new JLabel("Silahkan Login");
         JLabel labelUsername = new JLabel("Username:");
         textFieldUsername = new JTextField();
         JLabel labelPassword = new JLabel("Password:");
         passwordField = new JPasswordField();
         buttonLogin = new JButton("Login");
 
-        panel.add(textArea);
-        panel.add(new JTextArea()); // Placeholder for spacing
+        panel.add(label);
+        panel.add(new JLabel()); // Placeholder for spacing
         panel.add(labelUsername);
         panel.add(textFieldUsername);
         panel.add(labelPassword);

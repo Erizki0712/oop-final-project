@@ -18,15 +18,19 @@ public class MainMenu extends JFrame {
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(2, 3));
 
+        JTextArea textArea = new JTextArea("Silahkan pilih menu di bawah ini");
         buttonDataMobil = new JButton("Data Mobil");
         buttonDataPeminjaman = new JButton("Pendataan Peminjaman");
         buttonDataPengembalian = new JButton("Pendataan Pengembalian Mobil");
         buttonKeluar = new JButton("Keluar");
 
+        panel.add(textArea);
+        panel.add(new JTextArea());
         panel.add(buttonDataMobil);
         panel.add(buttonDataPeminjaman);
         panel.add(buttonDataPengembalian);
         panel.add(buttonKeluar);
+        panel.add(new JTextArea());
 
         buttonDataMobil.addActionListener(new ActionListener() {
             @Override
