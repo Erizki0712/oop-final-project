@@ -9,20 +9,22 @@ public class HalamanLogin extends JFrame {
     private JButton buttonLogin;
 
     public HalamanLogin() {
-        setTitle("Halaman Login");
+        setTitle("Aplikasi Rental Mobil");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(300, 150);
         setLocationRelativeTo(null);
 
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(3, 2));
-
+        panel.setLayout(new GridLayout(4, 2));
+        
+        JTextArea textArea  =  new JTextArea("Silahkan Login");
         JLabel labelUsername = new JLabel("Username:");
         textFieldUsername = new JTextField();
         JLabel labelPassword = new JLabel("Password:");
         passwordField = new JPasswordField();
         buttonLogin = new JButton("Login");
 
+        panel.add(textArea);
         panel.add(labelUsername);
         panel.add(textFieldUsername);
         panel.add(labelPassword);
