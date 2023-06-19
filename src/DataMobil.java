@@ -23,6 +23,9 @@ public class DataMobil extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new FlowLayout());
 
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(0, 2));
+
         // Membuat judul untuk kolom input
         labelMerk = new JLabel("Merk Mobil");
         labelNomorPlat = new JLabel("Nomor Plat");
