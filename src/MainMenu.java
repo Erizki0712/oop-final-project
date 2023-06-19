@@ -18,7 +18,7 @@ public class MainMenu extends JFrame {
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(5, 1));
 
-        JLabel label = new JLabel("-----Silahkan anda pilih menu di bawah ini-----");
+        JLabel label = new JLabel("Silahkan Anda Pilih Menu Di Bawah ini", 10);
         buttonDataMobil = new JButton("Data Mobil");
         buttonDataPeminjaman = new JButton("Pendataan Peminjaman Mobil");
         buttonDataPengembalian = new JButton("Pendataan Pengembalian Mobil");
