@@ -19,7 +19,7 @@ public class DataPeminjaman extends JFrame {
 
     public DataPeminjaman() {
         setTitle("Data Peminjaman");
-        setSize(800, 500);
+        setSize(750, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new FlowLayout());
 
