@@ -3,25 +3,27 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.table.DefaultTableModel;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
-public class DataPengembalian {
-    private User user;
+public class DataPengembalian extends JFrame {
     private JTextField textFieldNama, textFieldNomorPlat, textFieldLamaPeminjaman, textFieldTanggalPeminjaman, textFieldTanggalPengembalian, textFieldHarga;
     private JLabel labelNama, labelNomorPlat, labelLamaPeminjaman, labelTanggalPeminjaman, labelTanggalPengembalian, labelHarga;
     private JButton buttonSubmit, buttonDelete, buttonBack;
     private JTable table;
     private DefaultTableModel model;
+    private String dataFilePath = "data_pengembalian.txt";
 
-    public DataPengembalian(User user) {
-        this.user = user;
-        JFrame frame = new JFrame();
-        frame.setTitle("Data Pengembalian");
-        frame.setSize(750, 500);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLayout(new FlowLayout());
+    public DataPengembalian() {
+        setTitle("Data Pengembalian");
+        setSize(750, 500);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new FlowLayout());
 
-        // Membuat judul untuk kolom input
+        // membuat judul untuk kolom input
         labelNama = new JLabel("Nama Peminjam");
         labelNomorPlat = new JLabel("Nomor Plat");
         labelLamaPeminjaman = new JLabel("Lama Peminjaman (hari)");
@@ -29,7 +31,7 @@ public class DataPengembalian {
         labelTanggalPengembalian = new JLabel("Tanggal Pengembalian");
         labelHarga = new JLabel("Harga");
 
-        // Membuat textfield
+        // membuat textfield
         textFieldNama = new JTextField(10);
         textFieldNomorPlat = new JTextField(10);
         textFieldLamaPeminjaman = new JTextField(10);
@@ -37,12 +39,12 @@ public class DataPengembalian {
         textFieldTanggalPengembalian = new JTextField(10);
         textFieldHarga = new JTextField(10);
 
-        // Membuat button
+        // membuat button
         buttonSubmit = new JButton("Masukkan Data");
         buttonDelete = new JButton("Hapus");
         buttonBack = new JButton("Kembali");
 
-        // Membuat tabel
+        // membuat tabel data
         model = new DefaultTableModel();
         table = new JTable(model);
         model.addColumn("Nama Peminjam");
@@ -52,23 +54,25 @@ public class DataPengembalian {
         model.addColumn("Tanggal Pengembalian");
         model.addColumn("Harga");
 
-       
-        frame.add(labelNama);
-        frame.add(textFieldNama);
-        frame.add(labelNomorPlat);
-        frame.add(textFieldNomorPlat);
-        frame.add(labelLamaPeminjaman);
-        frame.add(textFieldLamaPeminjaman);
-        frame.add(labelTanggalPeminjaman);
-        frame.add(textFieldTanggalPeminjaman);
-        frame.add(labelTanggalPengembalian);
-        frame.add(textFieldTanggalPengembalian);
-        frame.add(labelHarga);
-        frame.add(textFieldHarga);
-        frame.add(buttonSubmit);
-        frame.add(buttonDelete);
-        frame.add(buttonBack);
-        frame.add(new JScrollPane(table));
+        add(labelNama);
+        add(textFieldNama);
+        add(labelNomorPlat);
+        add(textFieldNomorPlat);
+        add(labelLamaPeminjaman);
+        add(textFieldLamaPeminjaman);
+        add(labelTanggalPeminjaman);
+        add(textFieldTanggalPeminjaman);
+        add(labelTanggalPengembalian);
+        add(textFieldTanggalPengembalian);
+        add(labelHarga);
+        add(textFieldHarga);
+        add(buttonSubmit);
+        add(buttonDelete);
+        add(buttonBack);
+        add(new JScrollPane(table));
+
+        // Muat data tersimpan
+        loadSavedData();
 
         // fungsi tombol masukkan data
         buttonSubmit.addActionListener(new ActionListener() {
@@ -80,19 +84,19 @@ public class DataPengembalian {
                 String tanggalPengembalian = textFieldTanggalPengembalian.getText();
                 String harga = textFieldHarga.getText();
 
-                // masukkan data ke tabel
+                // menambahkan data ke tabel data
                 model.addRow(new Object[]{nama, nomorPlat, lamaPeminjaman, tanggalPeminjaman, tanggalPengembalian, harga});
 
-                
-                simpanDataKeFile(nama, nomorPlat, lamaPeminjaman, tanggalPeminjaman, tanggalPengembalian, harga);
-
-                // kosongkan kolom input setelah data masuk tabel
+                // membersihkan kolom input data setelah data ditambahkan
                 textFieldNama.setText("");
                 textFieldNomorPlat.setText("");
                 textFieldLamaPeminjaman.setText("");
                 textFieldTanggalPeminjaman.setText("");
                 textFieldTanggalPengembalian.setText("");
                 textFieldHarga.setText("");
+
+                // Simpan data
+                saveDataToFile();
             }
         });
 
@@ -101,8 +105,10 @@ public class DataPengembalian {
             public void actionPerformed(ActionEvent e) {
                 int row = table.getSelectedRow();
                 if (row >= 0) {
-                    // Menghapus baris yang dipilih dari tabel
+                    // hapus baris yang dipilih
                     model.removeRow(row);
+                   
+                    saveDataToTextFile();
                 } else {
                     JOptionPane.showMessageDialog(null, "Pilih baris yang ingin dihapus.");
                 }
@@ -112,56 +118,75 @@ public class DataPengembalian {
         // fungsi tombol kembali
         buttonBack.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Menutup jendela DataPengembalian dan kembali ke MainMenu
-                frame.dispose();
+                // tutup window DataPengembalian lalu kembali ke MainMenu
+                dispose();
                 new MainMenu().setVisible(true);
             }
         });
-
-        frame.setVisible(true);
     }
 
-    private void simpanDataKeFile(String nama, String nomorPlat, String lamaPeminjaman, String tanggalPeminjaman, String tanggalPengembalian, String harga) {
-        try {
-            FileWriter writer = new FileWriter("data_pengembalian.txt", true); // Menulis ke file dengan mode append (menambahkan ke data yang sudah ada)
-            writer.write(nama + "," + nomorPlat + "," + lamaPeminjaman + "," + tanggalPeminjaman + "," + tanggalPengembalian + "," + harga + "\n");
-            writer.close();
-        } catch (IOException ex) {
-            ex.printStackTrace();
+    // simpan data
+    private void saveDataToFile() {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(dataFilePath, true))) {
+            int rowCount = model.getRowCount();
+            int colCount = model.getColumnCount();
+            if (rowCount > 0) {
+                for (int i = rowCount - 1; i < rowCount; i++) {
+                    String nama = model.getValueAt(i, 0).toString();
+                    String nomorPlat = model.getValueAt(i, 1).toString();
+                    String lamaPeminjaman = model.getValueAt(i, 2).toString();
+                    String tanggalPeminjaman = model.getValueAt(i, 3).toString();
+                    String tanggalPengembalian = model.getValueAt(i, 4).toString();
+                    String harga = model.getValueAt(i, 5).toString();
+                    String data = nama + "," + nomorPlat + "," + lamaPeminjaman + "," + tanggalPeminjaman + "," + tanggalPengembalian + "," + harga;
+                    writer.write(data);
+                    writer.newLine();
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
-    private void bacaDataDariFile() {
-        try {
-            File file = new File("data_pengembalian.txt");
-            if (file.exists()) {
-                FileReader reader = new FileReader(file);
-                BufferedReader bufferedReader = new BufferedReader(reader);
-
-                String line;
-                while ((line = bufferedReader.readLine()) != null) {
-                    String[] data = line.split(",");
-                    model.addRow(data);
-                }
-
-                bufferedReader.close();
-                reader.close();
+    
+    private void saveDataToTextFile() {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(dataFilePath))) {
+            int rowCount = model.getRowCount();
+            int colCount = model.getColumnCount();
+            for (int i = 0; i < rowCount; i++) {
+                String nama = model.getValueAt(i, 0).toString();
+                String nomorPlat = model.getValueAt(i, 1).toString();
+                String lamaPeminjaman = model.getValueAt(i, 2).toString();
+                String tanggalPeminjaman = model.getValueAt(i, 3).toString();
+                String tanggalPengembalian = model.getValueAt(i, 4).toString();
+                String harga = model.getValueAt(i, 5).toString();
+                String data = nama + "," + nomorPlat + "," + lamaPeminjaman + "," + tanggalPeminjaman + "," + tanggalPengembalian + "," + harga;
+                writer.write(data);
+                writer.newLine();
             }
-        } catch (IOException ex) {
-            ex.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // muat data
+    private void loadSavedData() {
+        try (BufferedReader reader = new BufferedReader(new FileReader(dataFilePath))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] data = line.split(",");
+                model.addRow(data);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                DataPengembalian dataPengembalian = new DataPengembalian(null);
-                dataPengembalian.bacaDataDariFile();
-                dataPengembalian.setVisible(true);
+                new DataPengembalian().setVisible(true);
             }
         });
-    }
-
-    protected void setVisible(boolean b) {
     }
 }

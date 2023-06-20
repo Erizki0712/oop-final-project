@@ -51,7 +51,7 @@ public class MainMenu extends JFrame {
         buttonDataPengembalian.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                DataPengembalian dataPengembalian = new DataPengembalian(null);
+                DataPengembalian dataPengembalian = new DataPengembalian();
                 dispose();
                 dataPengembalian.setVisible(true);
             }
